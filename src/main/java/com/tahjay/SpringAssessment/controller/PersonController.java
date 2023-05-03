@@ -5,10 +5,9 @@ import com.tahjay.SpringAssessment.service.PeopleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -20,5 +19,10 @@ public class PersonController {
     public ResponseEntity<People> createPerson(@RequestBody People people) {
         People savedPerson = peopleService.createPerson(people);
         return new ResponseEntity<>(savedPerson, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public List<People> getAllPersons() {
+        return peopleService.getAllPersons();
     }
 }

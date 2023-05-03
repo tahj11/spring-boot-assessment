@@ -4,8 +4,10 @@ import com.tahjay.SpringAssessment.entity.EntityNotFoundException;
 import com.tahjay.SpringAssessment.exception.ResourceNotFoundException;
 import com.tahjay.SpringAssessment.model.Directors;
 import com.tahjay.SpringAssessment.model.Movies;
+import com.tahjay.SpringAssessment.model.People;
 import com.tahjay.SpringAssessment.repository.DirectorRepository;
 import com.tahjay.SpringAssessment.repository.MovieRepository;
+import com.tahjay.SpringAssessment.repository.PeopleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,9 @@ public class DirectorService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private PeopleRepository peopleRepository;
 
     public Directors createDirector(@RequestBody Directors directors) {
         return directorRepository.save(directors);
@@ -76,5 +81,17 @@ public class DirectorService {
                 .orElseThrow(() -> new EntityNotFoundException("Movie not found"));
 
         return new ArrayList<>(movies.getDirectors());
+    }
+
+    public Directors addExistingPersonToDirector(Long directorId, Long personId) {
+        Directors directors = directorRepository.findById(directorId)
+                .orElseThrow(() -> new EntityNotFoundException("Director not found"));
+
+        People people = peopleRepository.findById(Math.toIntExact(personId))
+                        .orElseThrow(() -> new EntityNotFoundException("Person not found"));
+
+        directors.setPerson(people);
+
+        return directorRepository.save(directors);
     }
 }

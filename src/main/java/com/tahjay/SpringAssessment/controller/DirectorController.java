@@ -4,6 +4,7 @@ import com.tahjay.SpringAssessment.model.Directors;
 import com.tahjay.SpringAssessment.model.Movies;
 import com.tahjay.SpringAssessment.service.DirectorService;
 import com.tahjay.SpringAssessment.service.MovieService;
+import com.tahjay.SpringAssessment.service.PeopleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,5 +56,11 @@ public class DirectorController {
     @GetMapping("{movieId}/directors")
     public List<Directors> getDirectorsForMovie(@PathVariable Long movieId) {
         return directorService.getDirectorsForMovies(movieId);
+    }
+
+    @PostMapping("/{directorId}/people/{personId}")
+    public ResponseEntity<Directors> addExistingPersonToDirector(@PathVariable Long directorId, @PathVariable Long personId) {
+        Directors directors = directorService.addExistingPersonToDirector(directorId, personId);
+        return ResponseEntity.ok(directors);
     }
 }

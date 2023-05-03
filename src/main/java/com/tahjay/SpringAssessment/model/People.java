@@ -22,6 +22,4 @@ public class People {
 
     private int birth;
 
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    private Directors directors;
 }

@@ -1,19 +1,37 @@
 package com.tahjay.SpringAssessment.service;
 
 import com.tahjay.SpringAssessment.model.People;
+import com.tahjay.SpringAssessment.repository.PeopleRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+@Service
+@AllArgsConstructor
+public class PeopleService{
+    private PeopleRepository peopleRepository;
 
-public interface PeopleService {
-    People createPerson(People people);
+    public People createPerson(@RequestBody People people) {
+        return peopleRepository.save(people);
+    }
 
-    People getPerson(int person_id);
 
-    List<People> getAllPersons(People people);
+    public People getPerson(int person_id) {
+        return null;
+    }
 
-    People updatePerson(People people);
 
-    void deletePerson(int person_id);
+    public List<People> getAllPersons() {
+        return peopleRepository.findAll();
+    }
+
+    public People updatePerson(People people) {
+        return null;
+    }
+
+    public void deletePerson(int person_id) {
+
+    }
 }
